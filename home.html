@@ -1,11 +1,179 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home Dashboard | TuanisHub</title>
+  
+  <!-- Google Fonts & Font Awesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Estilos propios -->
+  <link rel="stylesheet" href="estilos.css">
+
+  <!-- Confetti para celebración interactiva -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
-    <h1>que onda</h1>
+
+  <!-- Barra de Navegación -->
+  <header>
+    <nav class="navbar glass-panel">
+      <a href="home.html" class="brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-shapes"></i>
+        </div>
+        <span>Tuanis<span style="color: var(--secondary);">Hub</span></span>
+      </a>
+
+      <div class="nav-actions">
+        <button class="theme-toggle" onclick="toggleTheme()" title="Cambiar tema">
+          <i class="fa-solid fa-sun theme-toggle-icon"></i>
+        </button>
+
+        <button class="btn-logout" onclick="logout()" title="Cerrar Sesión">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          <span>Salir</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Contenido Principal (Dashboard Tuanis) -->
+  <main class="dashboard-container">
+
+    <!-- Hero / Saludo con Reloj en Vivo -->
+    <section class="welcome-banner glass-panel">
+      <div class="welcome-info">
+        <h1 id="greeting-text">¡Hola de nuevo!</h1>
+        <p>¡Qué bueno verte por acá, <strong id="user-display-name" style="color: var(--primary);">Amigo</strong>! Tu dashboard interactivo 100% estático está listo.</p>
+      </div>
+      <div class="clock-card">
+        <div class="clock-time" id="clock-time">00:00:00</div>
+        <div class="clock-date" id="clock-date">Cargando fecha...</div>
+      </div>
+    </section>
+
+    <!-- Métricas / Contadores Rápidos -->
+    <section class="stats-grid">
+      <div class="stat-card glass-panel">
+        <div class="stat-icon icon-purple">
+          <i class="fa-solid fa-list-check"></i>
+        </div>
+        <div class="stat-data">
+          <h3 id="stat-total-todos">3</h3>
+          <span>Metas Registradas</span>
+        </div>
+      </div>
+
+      <div class="stat-card glass-panel">
+        <div class="stat-icon icon-pink">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <div class="stat-data">
+          <h3 id="stat-completed-todos">2</h3>
+          <span>Tareas Completadas</span>
+        </div>
+      </div>
+
+      <div class="stat-card glass-panel">
+        <div class="stat-icon icon-green">
+          <i class="fa-solid fa-chart-line"></i>
+        </div>
+        <div class="stat-data">
+          <h3 id="stat-progress-rate">67%</h3>
+          <span>Tasa de Avance</span>
+        </div>
+      </div>
+
+      <div class="stat-card glass-panel">
+        <div class="stat-icon icon-amber">
+          <i class="fa-solid fa-cloud-bolt"></i>
+        </div>
+        <div class="stat-data">
+          <h3 style="font-size: 1.4rem;">Pura Vida</h3>
+          <span>GitHub Pages Ready</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Apps Interactivas del Home -->
+    <section class="dashboard-grid">
+      
+      <!-- Mini App de Tareas / Metas en LocalStorage -->
+      <div class="widget-card glass-panel">
+        <div class="widget-header">
+          <h2 class="widget-title">
+            <i class="fa-solid fa-clipboard-list" style="color: var(--primary);"></i>
+            Gestor de Metas Interactivas
+          </h2>
+          <span style="font-size: 0.85rem; color: var(--text-muted);">Guardado en LocalStorage</span>
+        </div>
+
+        <form id="todo-form" class="todo-input-group">
+          <input 
+            type="text" 
+            id="todo-input" 
+            class="todo-input" 
+            placeholder="¿Qué tenés planeado hacer hoy?..." 
+            autocomplete="off"
+            required
+          >
+          <button type="submit" class="btn-add-todo">
+            <i class="fa-solid fa-plus"></i> Agregar
+          </button>
+        </form>
+
+        <ul class="todo-list" id="todo-list">
+          <!-- Renderizado dinámico desde funciones.js -->
+        </ul>
+      </div>
+
+      <!-- Widget Tuanis: Frases & Celebración con Confeti -->
+      <div class="widget-card glass-panel tuani-box">
+        <div class="widget-header" style="justify-content: center;">
+          <h2 class="widget-title">
+            <i class="fa-solid fa-fire" style="color: var(--secondary);"></i>
+            Zona Pura Vida
+          </h2>
+        </div>
+
+        <div class="lucky-card">
+          <div class="lucky-emoji">✨</div>
+          <p class="lucky-quote" id="tuanis-quote">"El éxito en la vida no se mide por lo que logras, sino por los obstáculos que superas."</p>
+          <p class="lucky-author" id="tuanis-author">— Inspiración Tuanis</p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+          <button class="btn-celebrate" onclick="celebrateTuanis()">
+            <i class="fa-solid fa-champagne-glasses"></i>
+            ¡Celebrar con Confeti! 🎉
+          </button>
+          
+          <button class="btn-secondary" onclick="getRandomQuote()">
+            <i class="fa-solid fa-shuffle"></i> Otra frase tuanis
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Pie de Página -->
+  <footer>
+    <p>Proyecto 100% Estático • Diseñado para desplegar en <strong>GitHub Pages</strong> con HTML5, CSS3 y JavaScript Vainilla.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="funciones.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initHomeDashboard();
+    });
+  </script>
 </body>
 </html>
